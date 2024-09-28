@@ -1,75 +1,47 @@
-let countdown;
-let isRunning = false;
-let timeLeft;  // This will store the current time in seconds
-
-const minutesDisplay = document.getElementById('minutes');
-const secondsDisplay = document.getElementById('seconds');
-const startButton = document.getElementById('start');
-const resetButton = document.getElementById('reset');
-
-// Input fields for custom times
-const focusTimeInput = document.getElementById('focusTime');
-const shortBreakInput = document.getElementById('shortBreak');
-const longBreakInput = document.getElementById('longBreak');
-
-// Function to update the display
-function updateDisplay() {
-    let minutes = Math.floor(timeLeft / 60);
-    let seconds = timeLeft % 60;
-
-    minutesDisplay.textContent = minutes < 10 ? '0' + minutes : minutes;
-    secondsDisplay.textContent = seconds < 10 ? '0' + seconds : seconds;
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f4f4f4;
 }
 
-// Function to set the timer based on the input
-function setTimer(duration) {
-    timeLeft = duration * 60;  // Convert minutes to seconds
-    updateDisplay();
+.container {
+    text-align: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-// Start the timer
-function startTimer() {
-    if (!isRunning) {
-        isRunning = true;
-        
-        countdown = setInterval(() => {
-            timeLeft--;
-            updateDisplay();
-
-            if (timeLeft <= 0) {
-                clearInterval(countdown);
-                alert('Time is up!');
-                isRunning = false;
-                timeLeft = 0;
-                updateDisplay();
-            }
-        }, 1000);
-    }
+.time-display {
+    font-size: 48px;
+    margin: 20px 0;
 }
 
-// Reset the timer
-function resetTimer() {
-    clearInterval(countdown);
-    isRunning = false;
-    
-    // Reset to the focus time by default
-    const focusTime = parseInt(focusTimeInput.value);
-    setTimer(focusTime);
+.inputs {
+    margin: 20px 0;
 }
 
-// Event listeners
-startButton.addEventListener('click', () => {
-    if (!isRunning) {
-        const focusTime = parseInt(focusTimeInput.value);
-        setTimer(focusTime);
-        startTimer();
-    }
-});
+.controls button {
+    margin: 5px;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+    transition: background-color 0.3s;
+}
 
-resetButton.addEventListener('click', resetTimer);
+.controls button:hover {
+    background-color: #0056b3;
+}
 
-// Initialize display with focus time
-window.onload = () => {
-    const focusTime = parseInt(focusTimeInput.value);
-    setTimer(focusTime);
-};
+input[type="number"] {
+    width: 60px;
+    margin-left: 10px;
+}
